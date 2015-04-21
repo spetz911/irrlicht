@@ -102,16 +102,6 @@ sharedlib_osx: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm
 # for non-X11 app
 #sharedlib_osx: LDFLAGS += -framework cocoa -framework carbon -framework opengl -framework IOKit
 
-#Windows specific options
-IRRLICHT_DLL := ../../bin/Win32-gcc/Irrlicht.dll
-sharedlib_win32 staticlib_win32: SYSTEM = Win32-gcc
-sharedlib_win32: LDFLAGS += -lgdi32 -lopengl32 -ld3dx9d -lwinmm -Wl,--add-stdcall-alias
-#choose either -DIRR_COMPILE_WITH_DX9_DEV_PACK or -DNO_IRR_COMPILE_WITH_DIRECT3D_9_ depending if you need dx9
-#sharedlib_win32 staticlib_win32: CPPFLAGS += -DIRR_COMPILE_WITH_DX9_DEV_PACK
-sharedlib_win32 staticlib_win32: CPPFLAGS += -DNO_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_ -DNO_IRR_COMPILE_WITH_DIRECT3D_9_
-sharedlib_win32 staticlib_win32: CPPFLAGS += -DIRR_COMPILE_WITH_DX9_DEV_PACK -D__GNUWIN32__ -D_WIN32 -DWIN32 -D_WINDOWS -D_MBCS -D_USRDLL
-staticlib_win32: CPPFLAGS += -D_IRR_STATIC_LIB_
-
 VERSION = $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_RELEASE)
 SHARED_FULLNAME = $(SHARED_LIB).$(VERSION)
 SONAME = $(SHARED_LIB).$(VERSION_MAJOR).$(VERSION_MINOR)
@@ -133,15 +123,6 @@ $(STATIC_LIB): $(LINKOBJ)
 # Copies static lib into lib/Linux
 staticlib staticlib_osx: $(STATIC_LIB)
 	mkdir -p $(LIB_PATH)
-	cp $^ $(LIB_PATH)
-
-# Builds Irrlicht as dll (Irrlicht.dll) into ../../bin/Win32-gcc
-all_win32 win32: sharedlib_win32
-sharedlib_win32: $(IRRLICHT_DLL)
-../../bin/Win32-gcc/Irrlicht.dll: $(LINKOBJ)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS) -Wl,--out-implib,../../lib/Win32-gcc/$(STATIC_LIB)
-# Copies static lib into /lib/Win32-gcc
-staticlib_win32: $(STATIC_LIB)
 	cp $^ $(LIB_PATH)
 
 # Builds Irrlicht as shared lib (libIrrlicht.so.versionNumber) and copies it into /lib/MacOSX

@@ -42,17 +42,17 @@ all_osx: LDFLAGS += -lSDL -framework opengl
 # name of the binary - only valid for targets which set SYSTEM
 DESTPATH = $(BinPath)/$(Target)$(SUF)
 
-all_linux all_win32 static_win32 all_osx:
+all_linux all_osx:
 	$(warning Building...)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(Sources) -o $(DESTPATH) $(LDFLAGS)
 
-clean: clean_linux clean_win32
+clean: clean_linux
 	$(warning Cleaning...)
 
-clean_linux clean_win32:
+clean_linux:
 	@$(RM) $(DESTPATH)
 
-.PHONY: all all_win32 static_win32 clean clean_linux clean_win32
+.PHONY: all clean clean_linux
 
 #multilib handling
 ifeq ($(HOSTTYPE), x86_64)
