@@ -42,7 +42,7 @@
 
 
 //! Uncomment this line to compile with the SDL device
-//#define _IRR_COMPILE_WITH_SDL_DEVICE_
+#define _IRR_COMPILE_WITH_SDL_DEVICE_
 #ifdef NO_IRR_COMPILE_WITH_SDL_DEVICE_
 #undef _IRR_COMPILE_WITH_SDL_DEVICE_
 #endif
@@ -83,7 +83,7 @@
 #define MACOSX // legacy support
 #endif
 #define _IRR_OSX_PLATFORM_
-#define _IRR_COMPILE_WITH_OSX_DEVICE_
+// #define _IRR_COMPILE_WITH_OSX_DEVICE_
 #endif
 
 #if defined(__SVR4) && defined(__sun)

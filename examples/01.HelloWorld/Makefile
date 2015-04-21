@@ -32,11 +32,12 @@ LDFLAGS = $(USERLDFLAGS)
 all: all_osx
 
 # target specific settings
-all_linux all_win32 static_win32 all_osx: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+all_linux all_osx: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht -L/opt/local/lib/
 all_linux: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
 all_linux clean_linux: SYSTEM=Linux
 all_osx: SYSTEM=MacOSX
-all_osx: LDFLAGS += -framework cocoa -framework carbon -framework opengl -framework IOKit
+all_osx: LDFLAGS += -lSDL -framework opengl
+# all_osx: LDFLAGS += -framework cocoa -framework carbon -framework IOKit
 
 # name of the binary - only valid for targets which set SYSTEM
 DESTPATH = $(BinPath)/$(Target)$(SUF)
