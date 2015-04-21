@@ -652,7 +652,7 @@ bool CIrrDeviceMacOSX::createWindow()
 						NSOpenGLPFASamples, (NSOpenGLPixelFormatAttribute)CreationParams.AntiAlias,
 						NSOpenGLPFAStencilSize, (NSOpenGLPixelFormatAttribute)(CreationParams.Stencilbuffer?1:0),
 						NSOpenGLPFADoubleBuffer,
-						(NSOpenGLPixelFormatAttribute)nil
+						(NSOpenGLPixelFormatAttribute)NULL
 					};
 
 					if (CreationParams.AntiAlias<2)
@@ -678,7 +678,7 @@ bool CIrrDeviceMacOSX::createWindow()
 						{
 							// Third try without Doublebuffer
 							os::Printer::log("No doublebuffering available.", ELL_WARNING);
-							windowattribs[14]=(NSOpenGLPixelFormatAttribute)nil;
+							windowattribs[14]=(NSOpenGLPixelFormatAttribute)NULL;
 						}
 
 						format = [[NSOpenGLPixelFormat alloc] initWithAttributes:windowattribs];
@@ -953,7 +953,6 @@ void CIrrDeviceMacOSX::createDriver()
 		#endif
 			break;
 
-		case video::EDT_DIRECT3D8:
 		case video::EDT_DIRECT3D9:
 			os::Printer::log("This driver is not available in OSX. Try OpenGL or Software renderer.", ELL_ERROR);
 			break;

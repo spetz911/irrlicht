@@ -25,25 +25,23 @@ USERLDFLAGS =
 ####
 
 CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS)
-CXXFLAGS = $(USERCXXFLAGS)
+CXXFLAGS = $(USERCXXFLAGS) -std=c++11
 LDFLAGS = $(USERLDFLAGS)
 
 #default target is Linux
-all: all_linux
+all: all_osx
 
 # target specific settings
-all_linux all_win32 static_win32: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
+all_linux all_win32 static_win32 all_osx: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
 all_linux: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
 all_linux clean_linux: SYSTEM=Linux
-all_win32 clean_win32 static_win32: SYSTEM=Win32-gcc
-all_win32 clean_win32 static_win32: SUF=.exe
-static_win32: CPPFLAGS += -D_IRR_STATIC_LIB_
-all_win32: LDFLAGS += -lopengl32 -lm
-static_win32: LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
+all_osx: SYSTEM=MacOSX
+all_osx: LDFLAGS += -framework cocoa -framework carbon -framework opengl -framework IOKit
+
 # name of the binary - only valid for targets which set SYSTEM
 DESTPATH = $(BinPath)/$(Target)$(SUF)
 
-all_linux all_win32 static_win32:
+all_linux all_win32 static_win32 all_osx:
 	$(warning Building...)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(Sources) -o $(DESTPATH) $(LDFLAGS)
 
